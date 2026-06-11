@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Bag - Jennifer's Collection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2 class="section-title" style="text-align: center; margin-top: 30px;">Your Shopping Bag</h2>
+
+        {% if products %}
+            <div class="product-grid">
+                {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <p>Price: ৳{{ product.price }}</p>
+                        <a href="{{ url_for('remove_from_cart', index=loop.index0) }}" class="btn-shop" style="background-color: #666;">Remove</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+                
+
+    <div style="text-align: center; margin: 40px 0; padding: 20px; border-top: 2px solid #eee;">
+        <h2>Total Amount: ৳{{ total }}</h2>
+        <div style="margin-top: 20px;">
+            <a href="{{ url_for('home') }}" class="btn-shop" style="background-color: #333;">Continue Shopping</a>
+            <a href="{{ url_for('checkout') }}" class="btn-shop">Proceed to Checkout</a>
+    </div>
+    </div>
+        {% else %}
+            <div style="text-align: center; margin-top: 100px;">
+                <p style="font-size: 1.2rem; color: #666;">Your bag is currently empty!</p>
+                <a href="{{ url_for('home') }}" class="btn-shop" style="margin-top: 20px;">Shop Now</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        /* কার্ট পেজের জন্য ছোট কিছু এক্সট্রা সিএসএস */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 40px;
+        }
+    </style>
+</body>
+</html>
