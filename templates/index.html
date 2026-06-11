@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Jennifer's beautiful collections | Premium Ladies Wear</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+    <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Jennifer's beautiful collections" class="nav-logo">
+</div>
+
+<form action="/search" method="GET" style="display: flex; align-items: center;">
+    <input type="text" name="query" placeholder="Search for dresses..." required style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+    <button type="submit" style="background: #e91e63; color: white; border: none; padding: 8px 15px; margin-left: 5px; cursor: pointer; border-radius: 4px;">Search</button>
+</form>
+        <ul class="nav-links">
+                <li><a href="#new-arrivals">New Arrivals</a></li>
+                <li><a href="{{ url_for('login') }}"><i class="fas fa-user"></i> Login</a></li>
+                <ul class="nav-links">
+            <li>
+            <a href="{{ url_for('cart') }}" class="cart-icon">
+            <i class="fas fa-shopping-bag"></i> Bag ({{ session['cart']|length if 'cart' in session else 0 }})
+            </a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Elegance Redefined</h1>
+            <p>Discover our exclusive New Arrival collection for 2026.</p>
+            <a href="#new-arrivals" class="btn-shop">Shop Now</a>
+        </div>
+    </header>
+
+<section class="products" id="new-arrivals">
+    <h2 class="section-title">New Arrivals</h2> <div class="product-grid">
+        {% for product in new_products %}
+        <div class="product-card"> <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+            <div class="product-info">
+                <h3>{{ product.name }}</h3>
+                <p>Price: ৳{{ product.price }}</p>
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn-shop">Add to Bag</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+    <section class="products">
+    <h2 class="section-title">Featured collection</h2>
+    <div class="product-grid">
+        {% for product in featured_products %}
+        <div class="product-card">
+            <div class="img-box">
+                <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                <a href="{{ url_for('add_to_cart', product_id=product.id) }}" class="btn-shop">Add to Bag</a>
+            </div>
+            <div class="details">
+                <h3>{{ product.name }}</h3>
+                <p class="price">৳{{ product.price }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<footer class="site-footer">
+    <div class="footer-item">
+        <button class="accordion">Contact Us <span class="arrow">▼</span></button>
+        <div class="panel">
+            <p class="footer-contact-address"></p>
+            <p class="footer-contact-showroom"></p>
+            <p class="footer-contact-phone"></p>
+            <p class="footer-contact-email"></p>
+        </div>
+    </div>
+
+    <div class="footer-item">
+        <button class="accordion">About <span class="arrow">▼</span></button>
+        <div class="panel">
+            <a href="#"> About Us </a>
+            <a href="#">Contact Us </a>
+            <a href="#">Careers </a>
+        </div>
+    </div>
+
+    <div class="footer-item">
+        <button class="accordion">Help <span class="arrow">▼</span></button>
+        <div class="panel">
+            <a href="#">Payments</a>
+            <a href="#">Shipping & Delivery</a>
+        </div>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
+
+    <div class="footer-bottom">
+        <p class="footer-copyright-text"></p>
+        <div class="payment-methods">
+            <span class="badge">COD</span>
+            <span class="badge">MasterCard</span>
+            <span class="badge">VISA</span>
+        </div>
+        <p class="footer-developer-text" style="font-size: 12px; margin-top: 5px;"></p>
+    </div>
+</footer>
+
+<a href="https://wa.me/8801829665938?text=Hello!%20I%20want%20to%20know%20more%20about%20your%20products." class="whatsapp-btn" target="_blank">
+    <svg viewBox="0 0 32 32" class="whatsapp-icon">
+        <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.733 5.48 2.01 7.79l-2.01 7.345 7.538-1.977c2.225 1.21 4.774 1.897 7.48 1.897 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.333c-2.42 0-4.697-0.627-6.69-1.725l-0.48-0.263-4.437 1.163 1.185-4.325-0.29-0.463c-1.215-1.94-1.92-4.225-1.92-6.673 0-6.975 5.672-12.648 12.648-12.648s12.648 5.672 12.648 12.648c0 6.975-5.672 12.648-12.648 12.648zM22.067 18.528c-0.332-0.165-1.968-0.97-2.273-1.083-0.305-0.113-0.528-0.165-0.75 0.165-0.222 0.333-0.857 1.083-1.048 1.302-0.192 0.218-0.383 0.245-0.715 0.080-0.332-0.165-1.405-0.517-2.678-1.653-0.99-0.883-1.658-1.973-1.852-2.305-0.193-0.332-0.020-0.512 0.145-0.677 0.15-0.148 0.333-0.388 0.5-0.583 0.167-0.195 0.222-0.333 0.333-0.555 0.112-0.222 0.055-0.415-0.028-0.582-0.083-0.165-0.75-1.805-1.028-2.475-0.27-0.652-0.547-0.563-0.75-0.573-0.193-0.010-0.415-0.012-0.637-0.012-0.222 0-0.583 0.083-0.888 0.415-0.305 0.333-1.165 1.137-1.165 2.77 0 1.633 1.193 3.213 1.36 3.435 0.165 0.222 2.348 3.587 5.69 5.033 0.795 0.343 1.417 0.55 1.902 0.705 0.798 0.253 1.527 0.218 2.1 0.133 0.64-0.095 1.968-0.805 2.245-1.583 0.277-0.778 0.277-1.443 0.193-1.583-0.083-0.142-0.305-0.223-0.637-0.388z" fill="#ffffff"/>
+    </svg>
+    <span id="whatsAppText"></span>
+</a>
+
+<footer>
+        <p>&copy; 2026 Jennifer's Beautiful collections | All Rights Reserved</p>
+    </footer>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+acc[i].addEventListener("click", function() {
+    /* অ্যাক্টিভ ক্লাস টগল করা */
+    this.classList.toggle("active");
+    
+    /* বাটনের ঠিক পরের উপাদানটি (অর্থাৎ panel) খুঁজে নেওয়া */
+    var panel = this.nextElementSibling;
+    
+    /* প্যানেল ওপেন বা ক্লোজ করা */
+    if (panel.style.maxHeight) {
+    panel.style.maxHeight = null;
+    } else {
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+});
+}
+
+// ২. ডায়নামিক হোয়াটসঅ্যাপ লিংক জেনারেটর
+document.addEventListener("DOMContentLoaded", function() {
+    var rootStyles = getComputedStyle(document.documentElement);
+    var whatsappNum = rootStyles.getPropertyValue('--whatsapp-number').trim();
+    var buttonText = rootStyles.getPropertyValue('--whatsapp-button-text').trim().replace(/"/g, "");
+    
+    // বাটন টেক্সট এবং লিঙ্ক সেট করা
+    document.getElementById("whatsAppText").innerText = buttonText;
+    document.getElementById("whatsAppMainLink").href = "https://wa.me/" + whatsappNum + "?text=Hello!%20I%20visited%20your%20website%20and%20want%20to%20know%20more.";
+});
+</script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
